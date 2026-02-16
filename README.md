@@ -78,27 +78,7 @@ Malihabad produces **60% of India's Dasheri mangoes**, yet farmers face:
 ### Prerequisites
 - Python 3.10+
 - Web browser (Chrome/Edge recommended for voice)
-
-### Setup
-```bash
-# Clone repository
-git clone https://github.com/webdevpraveen/Dasheri-Sentinal.git
-cd Dasheri-Sentinal
-
-# Install Python dependencies
-pip install -r backend/requirements.txt
-
-# Configure environment (optional)
-cp .env.example .env
-# Add your API keys (OpenWeatherMap, data.gov.in)
-
-# Start the server
-python -m uvicorn backend.main:app --host 0.0.0.0 --port 8000 --reload
-
-# Open in browser
-# http://localhost:8000
-```
-
+ 
 ### API Documentation
 - **Swagger UI**: http://localhost:8000/api/docs
 - **ReDoc**: http://localhost:8000/api/redoc
