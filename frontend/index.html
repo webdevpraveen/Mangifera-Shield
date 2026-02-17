@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description"
+        content="Mangifera Shield — AI-powered mango disease detection and farm management for Malihabad farmers">
+    <meta name="theme-color" content="#166534">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>🛡️ Mangifera Shield — Protect Your Mangoes</title>
+    <link rel="manifest" href="/manifest.json">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <!-- TensorFlow.js for Real AI Disease Detection (Offline Capable) -->
+    <script src="/js/lib/tf.min.js"></script>
+    <script src="/js/lib/mobilenet.min.js"></script>
+</head>
+
+<body>
+
+    <!-- Splash Screen -->
+    <div id="splash-screen" class="splash-screen">
+        <div class="splash-content">
+            <div class="splash-logo">🛡️</div>
+            <h1 class="splash-title">Mangifera Shield</h1>
+            <p class="splash-subtitle" data-i18n="splash_subtitle">Protecting Malihabad's Mango Heritage</p>
+            <div class="splash-loader">
+                <div class="splash-bar"></div>
+            </div>
+            <p class="splash-tagline" data-i18n="splash_tagline">Edge AI • Offline First • Voice Enabled</p>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div id="app" class="app hidden">
+
+        <!-- Top Bar -->
+        <header class="top-bar">
+            <div class="top-bar-left">
+                <span class="logo-icon">🛡️</span>
+                <span class="logo-text">Mangifera Shield</span>
+            </div>
+            <div class="top-bar-right">
+                <button id="voice-toggle" class="icon-btn voice-btn" aria-label="Voice Command" title="Voice Command">
+                    <i class="fas fa-microphone"></i>
+                </button>
+                <div class="online-indicator" id="online-indicator">
+                    <span class="dot"></span>
+                    <span class="status-text" data-i18n="status_online">Online</span>
+                </div>
+                <button id="lang-toggle" class="lang-btn" aria-label="Switch Language">
+                    <span id="lang-label">EN</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Voice Command Overlay -->
+        <div id="voice-overlay" class="voice-overlay hidden">
+            <div class="voice-modal">
+                <div class="voice-animation">
+                    <div class="voice-ring ring-1"></div>
+                    <div class="voice-ring ring-2"></div>
+                    <div class="voice-ring ring-3"></div>
+                    <i class="fas fa-microphone voice-mic-icon"></i>
+                </div>
+                <p class="voice-status" id="voice-status" data-i18n="voice_listening">Listening... / सुन रहे हैं...</p>
+                <p class="voice-transcript" id="voice-transcript"></p>
+                <div class="voice-suggestions">
+                    <span class="voice-chip" data-i18n="voice_cmd_1">"Mandi ka rate"</span>
+                    <span class="voice-chip" data-i18n="voice_cmd_2">"Mausam"</span>
+                    <span class="voice-chip" data-i18n="voice_cmd_3">"Stock check"</span>
+                    <span class="voice-chip" data-i18n="voice_cmd_4">"Bimari jaanch"</span>
+                </div>
+                <button class="voice-close-btn" id="voice-close"><i class="fas fa-times"></i></button>
+            </div>
+        </div>
+
+        <!-- Page Container -->
+        <main class="page-container">
+
+            <!-- ===== DASHBOARD PAGE ===== -->
+            <section id="page-dashboard" class="page active">
+                <div class="page-header">
+                    <h1 data-i18n="dashboard_title">🏠 Dashboard</h1>
+                    <p class="page-desc" data-i18n="dashboard_desc">Welcome to Mangifera Shield, Kisan!</p>
+                </div>
+
+                <!-- Stats Row -->
+                <div class="stats-row">
+                    <div class="stat-card stat-green">
+                        <div class="stat-icon">🔬</div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="stat-scans">0</span>
+                            <span class="stat-label" data-i18n="stat_scans">Scans Done</span>
+                        </div>
+                    </div>
+                    <div class="stat-card stat-yellow">
+                        <div class="stat-icon">📦</div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="stat-stock">0 kg</span>
+                            <span class="stat-label" data-i18n="stat_stock">Total Stock</span>
+                        </div>
+                    </div>
+                    <div class="stat-card stat-orange">
+                        <div class="stat-icon">💰</div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="stat-price">₹0</span>
+                            <span class="stat-label" data-i18n="stat_price">Best Rate</span>
+                        </div>
+                    </div>
+                    <div class="stat-card stat-red">
+                        <div class="stat-icon">⚠️</div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="stat-alerts">0</span>
+                            <span class="stat-label" data-i18n="stat_alerts">Alerts</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 💰 Middleman Savings Card -->
+                <div class="savings-card" id="savings-card">
+                    <div class="savings-icon">💰</div>
+                    <div class="savings-info">
+                        <div class="savings-title" data-i18n="savings_title">Direct Selling Savings</div>
+                        <div class="savings-amount" id="savings-amount">₹900/quintal</div>
+                        <div class="savings-detail" id="savings-detail" data-i18n="savings_detail">Sell directly with
+                            quality certificate — skip the middleman!</div>
+                    </div>
+                    <button class="savings-action" onclick="navigateTo('certificate')">
+                        <i class="fas fa-certificate"></i>
+                    </button>
+                </div>
+
+                <!-- Quick Actions -->
+                <h2 class="section-title" data-i18n="quick_actions">⚡ Quick Actions</h2>
+                <div class="quick-grid">
+                    <button class="quick-card" onclick="navigateTo('scanner')">
+                        <div class="quick-icon">📸</div>
+                        <span data-i18n="nav_scanner">Scan Disease</span>
+                    </button>
+                    <button class="quick-card" onclick="navigateTo('ledger')">
+                        <div class="quick-icon">📒</div>
+                        <span data-i18n="nav_ledger">Khet-Khata</span>
+                    </button>
+                    <button class="quick-card" onclick="navigateTo('mandi')">
+                        <div class="quick-icon">🏪</div>
+                        <span data-i18n="nav_mandi">Mandi Rates</span>
+                    </button>
+                    <button class="quick-card" onclick="navigateTo('weather')">
+                        <div class="quick-icon">🌤️</div>
+                        <span data-i18n="nav_weather">Weather Alerts</span>
+                    </button>
+                    <button class="quick-card" onclick="navigateTo('certificate')">
+                        <div class="quick-icon">📜</div>
+                        <span data-i18n="nav_certificate">Quality Cert</span>
+                    </button>
+                    <button class="quick-card" onclick="document.getElementById('voice-toggle').click()">
+                        <div class="quick-icon">🎤</div>
+                        <span data-i18n="nav_voice">Voice Command</span>
+                    </button>
+                </div>
+
+                <!-- Weather Alert Banner -->
+                <div id="dashboard-alert" class="alert-banner hidden">
+                    <div class="alert-icon">⚠️</div>
+                    <div class="alert-content">
+                        <strong id="alert-title" data-i18n="alert_title">Disease Risk Alert</strong>
+                        <p id="alert-message"></p>
+                    </div>
+                </div>
+
+                <!-- Recent Scans -->
+                <h2 class="section-title" data-i18n="recent_scans">🔬 Recent Scans</h2>
+                <div id="recent-scans-list" class="card-list">
+                    <div class="empty-state">
+                        <span class="empty-icon">📷</span>
+                        <p data-i18n="no_scans">No scans yet. Tap "Scan Disease" to start!</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== SCANNER PAGE ===== -->
+            <section id="page-scanner" class="page">
+                <div class="page-header">
+                    <h1 data-i18n="scanner_title">📸 Disease Scanner</h1>
+                    <p class="page-desc" data-i18n="scanner_desc">Capture or upload a mango leaf image for AI diagnosis
+                    </p>
+                </div>
+
+                <div class="scanner-area">
+                    <div class="upload-zone" id="upload-zone">
+                        <div class="upload-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                        </div>
+                        <p class="upload-text" data-i18n="upload_text">Tap to capture or upload leaf image</p>
+                        <p class="upload-hint" data-i18n="upload_hint">JPG, PNG — Clear close-up of the leaf</p>
+                        <input type="file" id="image-input" accept="image/*" capture="environment" class="hidden">
+                    </div>
+
+                    <div id="image-preview-container" class="image-preview-container hidden">
+                        <img id="image-preview" class="image-preview" alt="Leaf preview">
+                        <button class="retake-btn" id="retake-btn">
+                            <i class="fas fa-redo"></i> <span data-i18n="retake">Retake</span>
+                        </button>
+                    </div>
+
+                    <button id="scan-btn" class="primary-btn scan-btn hidden">
+                        <i class="fas fa-search"></i>
+                        <span data-i18n="scan_now">Scan Now</span>
+                    </button>
+
+                    <div id="scan-loader" class="scan-loader hidden">
+                        <div class="loader-spinner"></div>
+                        <p data-i18n="scanning">AI analyzing... / AI जाँच कर रहा है...</p>
+                    </div>
+                </div>
+
+                <!-- Scan Results -->
+                <div id="scan-results" class="scan-results hidden">
+                    <div class="result-header" id="result-header">
+                        <div class="result-status" id="result-status-icon">✅</div>
+                        <div>
+                            <h3 id="result-disease" class="result-disease">Healthy</h3>
+                            <p id="result-confidence" class="result-confidence">95% confidence</p>
+                        </div>
+                    </div>
+
+                    <div class="result-details">
+                        <div class="detail-section">
+                            <h4 data-i18n="description">📋 Description</h4>
+                            <p id="result-description"></p>
+                        </div>
+
+                        <div class="detail-section" id="symptoms-section">
+                            <h4 data-i18n="symptoms">🔍 Symptoms</h4>
+                            <ul id="result-symptoms"></ul>
+                        </div>
+
+                        <div class="detail-section">
+                            <h4 data-i18n="treatment">💊 Treatment</h4>
+                            <ul id="result-treatment"></ul>
+                        </div>
+
+                        <div class="detail-section">
+                            <h4 data-i18n="prevention">🛡️ Prevention</h4>
+                            <ul id="result-prevention"></ul>
+                        </div>
+                    </div>
+
+                    <div class="result-actions">
+                        <button class="secondary-btn" onclick="generateCertificateFromScan()">
+                            <i class="fas fa-certificate"></i>
+                            <span data-i18n="gen_certificate">Generate Certificate</span>
+                        </button>
+                        <button class="secondary-btn" onclick="shareResult()">
+                            <i class="fas fa-share-alt"></i>
+                            <span data-i18n="share">Share</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Disease Info Cards -->
+                <h2 class="section-title" data-i18n="disease_info">📚 Disease Information</h2>
+                <div id="disease-cards" class="disease-grid"></div>
+            </section>
+
+            <!-- ===== KHET-KHATA LEDGER PAGE ===== -->
+            <section id="page-ledger" class="page">
+                <div class="page-header">
+                    <h1 data-i18n="ledger_title">📒 Khet-Khata</h1>
+                    <p class="page-desc" data-i18n="ledger_desc">Your offline inventory ledger — works without internet!
+                    </p>
+                </div>
+
+                <!-- Ledger Summary -->
+                <div class="ledger-summary">
+                    <div class="summary-card">
+                        <span class="summary-icon">📦</span>
+                        <span class="summary-value" id="ledger-total-qty">0 kg</span>
+                        <span class="summary-label" data-i18n="total_quantity">Total Quantity</span>
+                    </div>
+                    <div class="summary-card">
+                        <span class="summary-icon">💰</span>
+                        <span class="summary-value" id="ledger-total-value">₹0</span>
+                        <span class="summary-label" data-i18n="estimated_value">Est. Value</span>
+                    </div>
+                    <div class="summary-card">
+                        <span class="summary-icon">📝</span>
+                        <span class="summary-value" id="ledger-total-entries">0</span>
+                        <span class="summary-label" data-i18n="total_entries">Entries</span>
+                    </div>
+                </div>
+
+                <!-- Sync Status -->
+                <div class="sync-bar" id="sync-bar">
+                    <i class="fas fa-sync-alt"></i>
+                    <span id="sync-status" data-i18n="sync_status">All data saved locally</span>
+                    <button class="sync-btn" id="sync-btn" onclick="syncLedger()">
+                        <i class="fas fa-cloud-upload-alt"></i> <span data-i18n="sync">Sync</span>
+                    </button>
+                </div>
+
+                <!-- Add Entry Form -->
+                <div class="ledger-form-toggle">
+                    <button class="primary-btn" id="add-entry-btn" onclick="toggleLedgerForm()">
+                        <i class="fas fa-plus"></i> <span data-i18n="add_entry">Add Entry</span>
+                    </button>
+                    <button class="whatsapp-btn" id="sell-whatsapp-btn" onclick="sellAllOnWhatsApp()">
+                        <i class="fab fa-whatsapp"></i> <span data-i18n="sell_whatsapp">Sell on WhatsApp</span>
+                    </button>
+                </div>
+
+                <div id="ledger-form" class="ledger-form hidden">
+                    <div class="form-group">
+                        <label data-i18n="variety">🥭 Variety</label>
+                        <select id="entry-variety">
+                            <option value="Dasheri">Dasheri (दशहरी)</option>
+                            <option value="Langra">Langra (लंगड़ा)</option>
+                            <option value="Chausa">Chausa (चौसा)</option>
+                            <option value="Safeda">Safeda (सफेदा)</option>
+                            <option value="Totapuri">Totapuri (तोतापुरी)</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label data-i18n="quantity_kg">⚖️ Quantity (kg)</label>
+                            <input type="number" id="entry-quantity" placeholder="e.g., 500" min="0" step="0.5">
+                        </div>
+                        <div class="form-group">
+                            <label data-i18n="quality_grade">⭐ Quality</label>
+                            <select id="entry-grade">
+                                <option value="A">A — Premium</option>
+                                <option value="B">B — Standard</option>
+                                <option value="C">C — Basic</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label data-i18n="harvest_date">📅 Harvest Date</label>
+                            <input type="date" id="entry-date">
+                        </div>
+                        <div class="form-group">
+                            <label data-i18n="est_price">💰 Est. Price (₹/kg)</label>
+                            <input type="number" id="entry-price" placeholder="e.g., 45" min="0" step="0.5">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="notes">📝 Notes</label>
+                        <textarea id="entry-notes" rows="2" placeholder="Any notes about this batch..."></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button class="primary-btn" onclick="saveLedgerEntry()">
+                            <i class="fas fa-save"></i> <span data-i18n="save">Save Entry</span>
+                        </button>
+                        <button class="secondary-btn" onclick="toggleLedgerForm()">
+                            <i class="fas fa-times"></i> <span data-i18n="cancel">Cancel</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Entries List -->
+                <div id="ledger-entries" class="ledger-entries"></div>
+            </section>
+
+            <!-- ===== MANDI PRICES PAGE ===== -->
+            <section id="page-mandi" class="page">
+                <div class="page-header">
+                    <h1 data-i18n="mandi_title">🏪 Mandi Prices</h1>
+                    <p class="page-desc" data-i18n="mandi_desc">Dasheri mango rates from UP mandis</p>
+                </div>
+
+                <!-- Best Price Highlight -->
+                <div class="best-price-card" id="best-price-card">
+                    <div class="best-badge">🏆 <span data-i18n="best_rate">Best Rate</span></div>
+                    <div class="best-market" id="best-market">Delhi (Azadpur Mandi)</div>
+                    <div class="best-amount" id="best-amount">₹6,500/Quintal</div>
+                    <div class="best-diff" id="best-diff">
+                        <span data-i18n="vs_middleman">vs Middleman: </span>
+                        <span class="diff-value">+₹1,300</span>
+                    </div>
+                </div>
+
+                <!-- Middleman Alert -->
+                <div class="middleman-alert">
+                    <div class="middleman-icon">🚫</div>
+                    <div class="middleman-info">
+                        <strong data-i18n="middleman_title">Middleman Cut: ~20%</strong>
+                        <p id="middleman-text" data-i18n="middleman_text">Save ₹900/quintal by selling directly with
+                            verified quality certificates!</p>
+                    </div>
+                </div>
+
+                <!-- Price Table -->
+                <div class="price-table-container">
+                    <table class="price-table" id="price-table">
+                        <thead>
+                            <tr>
+                                <th data-i18n="market">Market</th>
+                                <th data-i18n="min_price">Min ₹</th>
+                                <th data-i18n="max_price">Max ₹</th>
+                                <th data-i18n="modal_price">Modal ₹</th>
+                            </tr>
+                        </thead>
+                        <tbody id="price-tbody"></tbody>
+                    </table>
+                </div>
+
+                <!-- Price Trend -->
+                <h2 class="section-title" data-i18n="price_trend">📈 Price Trend</h2>
+                <div class="trend-chart" id="trend-chart">
+                    <canvas id="trend-canvas"></canvas>
+                </div>
+                <p class="trend-insight" id="trend-insight"></p>
+
+                <div class="data-source">
+                    <i class="fas fa-database"></i>
+                    <span data-i18n="data_source">Source: data.gov.in / AGMARKNET</span>
+                    <span id="price-updated"></span>
+                </div>
+            </section>
+
+            <!-- ===== WEATHER ALERTS PAGE ===== -->
+            <section id="page-weather" class="page">
+                <div class="page-header">
+                    <h1 data-i18n="weather_title">🌤️ Weather & Disease Alerts</h1>
+                    <p class="page-desc" data-i18n="weather_desc">Malihabad-specific weather monitoring for disease
+                        prediction</p>
+                </div>
+
+                <!-- Current Weather -->
+                <div class="weather-card" id="weather-card">
+                    <div class="weather-main">
+                        <div class="weather-temp" id="weather-temp">22°C</div>
+                        <div class="weather-details">
+                            <div class="weather-detail">
+                                <i class="fas fa-tint"></i>
+                                <span data-i18n="humidity">Humidity:</span>
+                                <strong id="weather-humidity">68%</strong>
+                            </div>
+                            <div class="weather-detail">
+                                <i class="fas fa-wind"></i>
+                                <span data-i18n="wind">Wind:</span>
+                                <strong id="weather-wind">3.2 km/h</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="weather-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Malihabad, Lucknow</span>
+                    </div>
+                </div>
+
+                <!-- Risk Gauge -->
+                <h2 class="section-title" data-i18n="disease_risk">🎯 Disease Risk Level</h2>
+                <div class="risk-gauge-container" id="risk-gauges"></div>
+
+                <!-- Alerts -->
+                <h2 class="section-title" data-i18n="active_alerts">🚨 Active Alerts</h2>
+                <div id="weather-alerts" class="alert-list"></div>
+
+                <!-- Local Advisory -->
+                <div class="local-advisory" id="local-advisory">
+                    <h3><i class="fas fa-info-circle"></i> <span data-i18n="malihabad_advisory">Malihabad
+                            Advisory</span></h3>
+                    <div id="advisory-content"></div>
+                </div>
+            </section>
+
+            <!-- ===== CERTIFICATE PAGE ===== -->
+            <section id="page-certificate" class="page">
+                <div class="page-header">
+                    <h1 data-i18n="cert_title">📜 Quality Certificate</h1>
+                    <p class="page-desc" data-i18n="cert_desc">AI-verified proof of quality for premium buyers</p>
+                </div>
+
+                <div class="cert-form">
+                    <div class="form-group">
+                        <label data-i18n="farmer_name">👤 Farmer Name / किसान का नाम</label>
+                        <input type="text" id="cert-farmer-name" placeholder="e.g., Ram Kumar">
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="select_scan">🔬 Select Scan Result</label>
+                        <select id="cert-scan-select">
+                            <option value="">-- Select a scan --</option>
+                        </select>
+                    </div>
+                    <button class="primary-btn cert-generate-btn" id="cert-generate-btn"
+                        onclick="generateCertificate()">
+                        <i class="fas fa-file-pdf"></i>
+                        <span data-i18n="generate_cert">Generate Certificate</span>
+                    </button>
+                </div>
+
+                <!-- Certificate Preview -->
+                <div id="cert-preview" class="cert-preview hidden">
+                    <div class="cert-card">
+                        <div class="cert-badge">🛡️ AI Verified</div>
+                        <h3>Mangifera Shield</h3>
+                        <p class="cert-subtitle" data-i18n="quality_cert">Quality Certificate</p>
+                        <div class="cert-details" id="cert-details"></div>
+                        <div class="cert-qr" id="cert-qr"></div>
+                        <div class="cert-actions">
+                            <button class="primary-btn" onclick="downloadCertificate()">
+                                <i class="fas fa-download"></i> Download PDF
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <h2 class="section-title" data-i18n="past_certs">📋 Past Certificates</h2>
+                <div id="cert-history" class="card-list">
+                    <div class="empty-state">
+                        <span class="empty-icon">📜</span>
+                        <p data-i18n="no_certs">No certificates generated yet.</p>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <button class="nav-item active" data-page="dashboard" onclick="navigateTo('dashboard')">
+                <i class="fas fa-home"></i>
+                <span data-i18n="nav_home">Home</span>
+            </button>
+            <button class="nav-item" data-page="scanner" onclick="navigateTo('scanner')">
+                <i class="fas fa-camera"></i>
+                <span data-i18n="nav_scan">Scan</span>
+            </button>
+            <button class="nav-item" data-page="ledger" onclick="navigateTo('ledger')">
+                <i class="fas fa-book"></i>
+                <span data-i18n="nav_khata">Khata</span>
+            </button>
+            <button class="nav-item" data-page="mandi" onclick="navigateTo('mandi')">
+                <i class="fas fa-store"></i>
+                <span data-i18n="nav_rate">Rates</span>
+            </button>
+            <button class="nav-item" data-page="weather" onclick="navigateTo('weather')">
+                <i class="fas fa-cloud-sun"></i>
+                <span data-i18n="nav_alert">Alerts</span>
+            </button>
+        </nav>
+    </div>
+
+    <!-- 🚨 Proactive Alert Modal -->
+    <div id="proactive-alert-modal" class="proactive-modal hidden">
+        <div class="proactive-card">
+            <div class="proactive-pulse"></div>
+            <div class="proactive-icon">🚨</div>
+            <h3 class="proactive-title" id="proactive-title">Disease Risk Detected!</h3>
+            <p class="proactive-disease" id="proactive-disease">Powdery Mildew</p>
+            <div class="proactive-risk" id="proactive-risk">CRITICAL</div>
+            <p class="proactive-message" id="proactive-message">Spray Sulfur (0.2%) immediately</p>
+            <div class="proactive-actions">
+                <button class="proactive-btn primary" onclick="navigateTo('weather'); closeProactiveAlert();">View
+                    Details</button>
+                <button class="proactive-btn secondary" onclick="closeProactiveAlert()">Dismiss</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 📲 PWA Install Banner -->
+    <div id="install-banner" class="install-banner hidden">
+        <div class="install-content">
+            <span class="install-icon">📲</span>
+            <div class="install-text">
+                <strong>Install Mangifera Shield</strong>
+                <span>Use offline like a native app!</span>
+            </div>
+        </div>
+        <button class="install-btn" id="install-btn">Install</button>
+        <button class="install-close"
+            onclick="document.getElementById('install-banner').classList.add('hidden')">✕</button>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast hidden">
+        <span id="toast-message"></span>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/js/i18n.js"></script>
+    <script src="/js/db.js"></script>
+    <script src="/js/app.js"></script>
+    <script src="/js/scanner.js"></script>
+    <script src="/js/ledger.js"></script>
+    <script src="/js/mandi.js"></script>
+    <script src="/js/weather.js"></script>
+    <script src="/js/certificate.js"></script>
+    <script src="/js/voice.js"></script>
+
+</body>
+
+</html>

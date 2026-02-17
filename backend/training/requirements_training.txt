@@ -1,0 +1,8 @@
+# Training Dependencies — Install ONLY for model training
+# These are NOT needed to run the main application
+
+tensorflow==2.15.0
+tensorflowjs==4.17.0
+scikit-learn==1.4.0
+matplotlib==3.8.2
+kaggle==1.6.12

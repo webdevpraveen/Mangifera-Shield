@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 192 192">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f4c2e"/>
+      <stop offset="100%" style="stop-color:#1a6b3c"/>
+    </linearGradient>
+  </defs>
+  <rect width="192" height="192" rx="38" fill="url(#bg)"/>
+  <!-- Shield -->
+  <path d="M96 28 L148 52 V100 C148 136 96 164 96 164 C96 164 44 136 44 100 V52 Z" 
+        fill="none" stroke="#fbbf24" stroke-width="5" opacity="0.9"/>
+  <!-- Mango Leaf -->
+  <path d="M96 60 Q120 75 115 110 Q110 130 96 140 Q82 130 77 110 Q72 75 96 60Z" 
+        fill="#22c55e" opacity="0.85"/>
+  <path d="M96 60 Q96 100 96 140" fill="none" stroke="#166534" stroke-width="2"/>
+  <path d="M96 80 Q108 85 112 95" fill="none" stroke="#166534" stroke-width="1.5"/>
+  <path d="M96 90 Q108 95 110 105" fill="none" stroke="#166534" stroke-width="1.5"/>
+  <path d="M96 80 Q84 85 80 95" fill="none" stroke="#166534" stroke-width="1.5"/>
+  <path d="M96 90 Q84 95 82 105" fill="none" stroke="#166534" stroke-width="1.5"/>
+  <!-- AI dot -->
+  <circle cx="96" cy="105" r="6" fill="#fbbf24"/>
+</svg>

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f4c2e"/>
+      <stop offset="100%" style="stop-color:#1a6b3c"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="96" fill="url(#bg)"/>
+  <!-- Shield -->
+  <path d="M256 72 L396 140 V268 C396 364 256 440 256 440 C256 440 116 364 116 268 V140 Z" 
+        fill="none" stroke="#fbbf24" stroke-width="12" opacity="0.9"/>
+  <!-- Mango Leaf -->
+  <path d="M256 155 Q320 200 310 295 Q298 350 256 378 Q214 350 202 295 Q192 200 256 155Z" 
+        fill="#22c55e" opacity="0.85"/>
+  <path d="M256 155 Q256 270 256 378" fill="none" stroke="#166534" stroke-width="4"/>
+  <path d="M256 210 Q288 225 298 255" fill="none" stroke="#166534" stroke-width="3"/>
+  <path d="M256 240 Q288 255 296 280" fill="none" stroke="#166534" stroke-width="3"/>
+  <path d="M256 270 Q288 285 294 305" fill="none" stroke="#166534" stroke-width="3"/>
+  <path d="M256 210 Q224 225 214 255" fill="none" stroke="#166534" stroke-width="3"/>
+  <path d="M256 240 Q224 255 216 280" fill="none" stroke="#166534" stroke-width="3"/>
+  <path d="M256 270 Q224 285 218 305" fill="none" stroke="#166534" stroke-width="3"/>
+  <!-- AI indicator -->
+  <circle cx="256" cy="285" r="14" fill="#fbbf24"/>
+  <circle cx="256" cy="285" r="7" fill="#0f4c2e"/>
+</svg>

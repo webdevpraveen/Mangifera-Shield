@@ -75,12 +75,10 @@ Malihabad produces **60% of India's Dasheri mangoes**, yet farmers face:
 
 ## 🚀 Quick Start
 
-### Prerequisites
-- Python 3.10+
-- Web browser (Chrome/Edge recommended for voice)
- 
-### API Documentation
-- **Swagger UI**: http://localhost:8000/api/docs
+### Quick Start
+1.  **Install Dependencies:** `pip install -r backend/requirements.txt`
+2.  **Start the App:** `python run_app.py`
+3.  **Open in Browser:** http://localhost:8000
 - **ReDoc**: http://localhost:8000/api/redoc
 
 ---
@@ -154,7 +152,7 @@ Dasheri-Sentinal/
 
 ## 🤝 Team
 
-Built with ❤️ for India's mango farmers at the AgriTech Hackathon.
+Built with ❤️ for India's mango farmers at the Viveka 5.0 Hackathon at SRMU.
 
 ---
 

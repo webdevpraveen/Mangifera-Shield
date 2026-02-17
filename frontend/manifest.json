@@ -1,0 +1,68 @@
+{
+    "name": "Mangifera Shield",
+    "short_name": "MangiferaShield",
+    "description": "AI-powered mango disease detection & farm management for Malihabad",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#0a0f0d",
+    "theme_color": "#166534",
+    "orientation": "portrait-primary",
+    "scope": "/",
+    "lang": "en",
+    "categories": [
+        "agriculture",
+        "productivity",
+        "utilities"
+    ],
+    "icons": [
+        {
+            "src": "/assets/icon-192.svg",
+            "sizes": "192x192",
+            "type": "image/svg+xml"
+        },
+        {
+            "src": "/assets/icon-512.svg",
+            "sizes": "512x512",
+            "type": "image/svg+xml"
+        }
+    ],
+    "screenshots": [],
+    "shortcuts": [
+        {
+            "name": "Scan Disease",
+            "short_name": "Scan",
+            "url": "/?page=scanner",
+            "icons": [
+                {
+                    "src": "/assets/icon-192.svg",
+                    "sizes": "192x192",
+                    "type": "image/svg+xml"
+                }
+            ]
+        },
+        {
+            "name": "Khet-Khata",
+            "short_name": "Ledger",
+            "url": "/?page=ledger",
+            "icons": [
+                {
+                    "src": "/assets/icon-192.svg",
+                    "sizes": "192x192",
+                    "type": "image/svg+xml"
+                }
+            ]
+        },
+        {
+            "name": "Mandi Prices",
+            "short_name": "Prices",
+            "url": "/?page=mandi",
+            "icons": [
+                {
+                    "src": "/assets/icon-192.svg",
+                    "sizes": "192x192",
+                    "type": "image/svg+xml"
+                }
+            ]
+        }
+    ]
+}
