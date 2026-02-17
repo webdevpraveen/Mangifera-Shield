@@ -98,6 +98,9 @@ Dasheri-Sentinal/
 │   │   ├── mandi.py            # Mandi price fetching
 │   │   ├── weather.py          # Weather & disease alerts
 │   │   └── certificate.py      # Quality certificate PDF
+│   └── training/
+│       ├── train_model.py      # ResNet50 Trainer + Imbalance Handling
+│       └── eda.py              # Exploratory Data Analysis (Graphs)
 │   └── services/
 │       ├── treatment_engine.py # 8-disease knowledge base
 │       ├── weather_service.py  # OpenWeatherMap + risk calc
