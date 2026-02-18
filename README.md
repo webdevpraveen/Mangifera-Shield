@@ -184,41 +184,8 @@ Our implementation is based on the following peer-reviewed research papers and d
 
 ---
 
-## 🚀 Installation & Setup Guide
 
-### 1. Prerequisites
-- Python 3.10+
-- Git
-- Google Chrome (for best Voice API support)
-
-### 2. Clone Repository
-```bash
-git clone https://github.com/webdevpraveen/Mangifera-Shield.git
-cd Mangifera-Shield
-```
-
-### 3. Backend Setup
-```bash
-# Creative Virtual Environment
-python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
-
-# Install Dependencies
-pip install -r backend/requirements.txt
-```
-
-### 4. Running the Application
-We have provided a unified launcher script:
-```bash
-python run_app.py
-```
-*This will:*
-1.  Start the FastAPI server on `localhost:8000`.
-2.  Launch the PWA in your default browser.
-
----
-
-## ❓ FAQ (Judges' Questions)
+## ❓ FAQs
 
 **Q: Why not use a cloud API for disease detection?**
 **A:** Malihabad orchards have poor connectivity. A cloud API would fail when the farmer needs it most. Edge AI ensures it works 100% offline.
@@ -244,10 +211,10 @@ python run_app.py
 
 ## 🤝 Team & Acknowledgements
 
-**Lead Developer:** Praveen K Singh (@webdevpraveen)  
-**Hackathon:** Viveka 5.0 (2026)  
+**Lead Developer:** Praveen Kumar Singh (@webdevpraveen)  
+**Lead Researcher:** Sundram Gupta (@sundramdotdev)
 
-*Special thanks to the ICAR-CISH (Central Institute for Subtropical Horticulture) for their open-access research papers on mango diseases which guided our dataset curation.*
+**Hackathon:** Viveka The Intelligence 5.0 at SRMU
+
 
 ---
-*Built with ❤️ in India 🇮🇳*
