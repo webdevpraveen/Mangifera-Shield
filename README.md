@@ -1,11 +1,8 @@
 # 🛡️ Mangifera Shield — *Protecting Malihabad's Mango Heritage*
 
 > **🏆 Viveka 5.0 Hackathon Project**  
-> **Theme:** AgriTech / Rural Development  
-> **Team:** WebDevPraveen  
-> **Location:** Malihabad, Lucknow (The Mango Capital of India)
+> **Theme:** AgriTech
 
-![Banner](https://img.shields.io/badge/Status-Hackathon_Ready-success?style=for-the-badge) 
 ![Python](https://img.shields.io/badge/Backend-FastAPI_%7C_Python_3.11-blue?style=for-the-badge&logo=python)
 ![AI](https://img.shields.io/badge/AI_Model-ResNet50_%7C_TF.js-orange?style=for-the-badge&logo=tensorflow)
 ![PWA](https://img.shields.io/badge/Frontend-Offline_PWA-purple?style=for-the-badge&logo=pwa)
@@ -107,10 +104,13 @@ We moved from MobileNetV2 to **ResNet50** for superior feature extraction.
 
 #### Confusion Matrix
 *Note the diagonal dominance, indicating high true positive rates across all classes.*
-![Confusion Matrix](./backend/training/plots/confusion_matrix.png)
+<img width="868" height="686" alt="image" src="https://github.com/user-attachments/assets/a8b040e8-8d37-40a0-baf5-a2d1ee0d9b2c" />
 
 #### Class Distribution (Post-Balancing)
-![Class Distribution](./backend/training/plots/class_distribution.png)
+<img width="803" height="392" alt="image" src="https://github.com/user-attachments/assets/77263fc6-5401-49de-a1be-479d58c228a6" />
+
+#### Sample Images of Dataset
+<img width="874" height="471" alt="image" src="https://github.com/user-attachments/assets/448b9b28-8444-45c5-afcd-7f0190f3322a" />
 
 ---
 
