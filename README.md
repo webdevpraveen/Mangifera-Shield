@@ -185,21 +185,6 @@ Our implementation is based on the following peer-reviewed research papers and d
 ---
 
 
-## ❓ FAQs
-
-**Q: Why not use a cloud API for disease detection?**
-**A:** Malihabad orchards have poor connectivity. A cloud API would fail when the farmer needs it most. Edge AI ensures it works 100% offline.
-
-**Q: Is ResNet50 too heavy for mobile?**
-**A:** We used **Quantization** (float16) to reduce the model size to ~25MB. Modern smartphones can run this inference in < 800ms.
-
-**Q: How do you handle new diseases?**
-**A:** The app has a "Report New" feature. Farmers can upload unknown samples explicitly when online, which our team labels and retrains into the next model version (v2.0).
-
-**Q: Can this scale to other crops?**
-**A:** Yes! The architecture is crop-agnostic. By swapping the `.h5` model and the `treatment_engine.py` JSON, we can adapt this for Guava, Apple, or Wheat in weeks.
-
----
 
 ## 🔮 Future Roadmap
 
@@ -208,11 +193,6 @@ Our implementation is based on the following peer-reviewed research papers and d
 - [ ] **Phase 4:** Community Forum for peer-to-peer farmer support.
 
 ---
-
-## 🤝 Team & Acknowledgements
-
-**Lead Developer:** Praveen Kumar Singh (@webdevpraveen)  
-**Lead Researcher:** Sundram Gupta (@sundramdotdev)
 
 **Hackathon:** Viveka The Intelligence 5.0 at SRMU
 
